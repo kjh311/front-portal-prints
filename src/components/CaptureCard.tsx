@@ -177,16 +177,24 @@ const CaptureCard: React.FC<CaptureCardProps> = ({ capture, onUpdate, onDelete }
                   onChange={(e) => setEditTitle(e.target.value)}
                   className="flex-1 max-w-md px-3 py-2 bg-white text-slate-900 rounded-lg text-center"
                   autoFocus
-                  onKeyDown={(e) => e.key === 'Enter' && handleSaveTitle()}
+                  onKeyDown={(e) => {
+                    e.stopPropagation();
+                    if (e.key === 'Enter') handleSaveTitle();
+                  }}
+                  onClick={(e) => e.stopPropagation()}
                 />
                 <button
-                  onClick={handleSaveTitle}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleSaveTitle();
+                  }}
                   className="p-2 bg-indigo-600 rounded-lg hover:bg-indigo-700"
                 >
                   <Save size={20} />
                 </button>
                 <button
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation();
                     setEditTitle(capture.video_title);
                     setIsEditing(false);
                   }}
@@ -200,7 +208,8 @@ const CaptureCard: React.FC<CaptureCardProps> = ({ capture, onUpdate, onDelete }
                 <p className="font-semibold text-lg">{capture.video_title}</p>
                 <div className="flex items-center justify-center gap-2 mt-2">
                   <button
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       setEditTitle(capture.video_title);
                       setIsEditing(true);
                     }}
