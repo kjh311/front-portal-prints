@@ -128,7 +128,18 @@ const Dashboard: React.FC = () => {
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
               {filteredCaptures.map((capture) => (
-                <CaptureCard key={capture.id} capture={capture} />
+                <CaptureCard 
+                  key={capture.id} 
+                  capture={capture}
+                  onUpdate={(id, newTitle) => {
+                    setCaptures(prev => prev.map(c => 
+                      c.id === id ? { ...c, video_title: newTitle } : c
+                    ));
+                  }}
+                  onDelete={(id) => {
+                    setCaptures(prev => prev.filter(c => c.id !== id));
+                  }}
+                />
               ))}
             </div>
 
